@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Error Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <style>
+    /* Custom styles */
+    body {
+      background-color: #000;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    .error-container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 40px;
+      background-color: #000;
+      border: 2px solid #fff;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .error-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .error-message {
+      margin-bottom: 40px;
+    }
+    .return-button {
+      background-color: #ffdd57;
+      color: #000;
+      border: none;
+      margin-bottom: 20px;
+    }
+    .return-button:hover {
+      background-color: #ffc107;
+      color: #000;
+    }
+
+    /* Responsive styles */
+    @media screen and (max-width: 1024px) {
+      .error-container {
+        width: 80%;
+        max-width: 600px;
+      }
+    }
+
+    /* Fullscreen styles */
+    html, body {
+      height: 100%;
+    }
+    .container {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="error-container">
+      <h1 class="error-title">Invalid Credentials</h1>
+      <p class="error-message">The username or password you entered is incorrect.</p>
+      <a href="/admin" class="button is-fullwidth return-button">Return to Login</a>
+    </div>
+  </div>
+</body>
+</html>

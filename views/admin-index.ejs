@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <style>
+    /* Custom styles */
+    body {
+      background-color: #000;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    .login-container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 40px;
+      background-color: #000;
+      border: 2px solid #fff;
+      border-radius: 8px;
+    }
+    .login-title {
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .login-form {
+      margin-bottom: 20px;
+    }
+    .login-button {
+      background-color: #ffdd57;
+      color: #000;
+      border: none;
+    }
+    .login-button:hover {
+      background-color: #ffc107;
+      color: #000;
+    }
+
+    .logo {
+      margin-bottom: 20px;
+      background-color: #ffdd57;
+      padding: 10px;
+    }
+    .logo img {
+      max-width: 200px;
+    }
+
+    /* Responsive styles */
+    @media screen and (max-width: 1024px) {
+      .login-container {
+        width: 80%;
+        max-width: 600px;
+      }
+    }
+
+    /* Fullscreen styles */
+    html, body {
+      height: 100%;
+    }
+    .container {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .logo img {
+      max-width: 200px;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="login-container">
+      <div class="logo">
+        <img src="/images/Redeem.png" alt="Logo">
+      </div>
+      <h1 class="login-title">Admin Login</h1>
+      <form class="login-form" action="/admin/login" method="post">
+        <div class="field">
+          <label class="label">Admin ID</label>
+          <div class="control">
+            <input class="input" name="adminid" type="text" placeholder="Enter your Admin ID" required>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Admin Password</label>
+          <div class="control">
+            <input class="input" name="password" type="password" placeholder="Enter your password" required>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <button class="button is-fullwidth login-button" type="submit">Login</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Code Redemption</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <style>
+    /* Custom styles */
+    body {
+      /* background-color: #000; */
+      background-color: #6c757d;
+   
+      color: #6c757d;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    .redeem-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    .logo {
+      margin-bottom: 20px;
+      background-color: #ffdd57;
+      padding: 10px;
+    }
+    .logo img {
+      max-width: 200px;
+    }
+    .redeem-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .field-label {
+      color: #ffdd57;
+      text-align: center;
+    }
+    .form-box {
+      width: 300px;
+      padding: 20px;
+      background-color: #222;
+      border-radius: 8px;
+    }
+    .redeem-button {
+      background-color: #ffdd57;
+      color: #000;
+      border: none;
+      margin-top: 20px;
+    }
+    .redeem-button:hover {
+      background-color: #ffc107;
+      color: #000;
+    }
+
+    /* Responsive styles */
+    @media screen and (max-width: 768px) {
+      .form-box {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+
+  <div class="redeem-container">
+    <div class="logo">
+      <img src="/images/Redeem.png" alt="Logo">
+    </div>
+    <div class="form-box">
+      <h1 class="redeem-title">REDEEM YOUR CODE:</h1>
+      <div class="field">
+        <label class="label field-label">Order ID:</label>
+        <div class="control">
+          <input id="orderID" class="input" type="text" placeholder="Enter your order ID" required>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label field-label">Purchased Product:</label>
+        <div class="control">
+          <input id="purchasedProduct" class="input" type="text" placeholder="Enter the purchased product" required>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label field-label">Email:</label>
+        <div class="control">
+          <input id="email" class="input" type="email" placeholder="Enter your email" required>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label field-label">Your Redeem Code:</label>
+        <div class="control">
+          <input id="redeemCode" class="input" type="text" placeholder="Enter your redeem code" required>
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <button id="redeemButton" class="button redeem-button">Redeem</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- <div class="redeem-container">
+    <div class="logo">
+      <img src="/images/Redeem.png" alt="Logo">
+    </div>
+    <div class="form-box">
+      <h1 class="redeem-title">REDEEM YOUR CODE:</h1>
+      
+        <div class="field">
+          <label class="label field-label">Order ID:</label>
+          <div class="control">
+            <input  id="orderID" class="input" type="text" placeholder="Enter your order ID" required>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label field-label">Email:</label>
+          <div class="control">
+            <input id="email" class="input" type="email" placeholder="Enter your email" required>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label field-label">Your Redeem Code:</label>
+          <div class="control">
+            <input id="redeemCode" class="input" type="text" placeholder="Enter your redeem code" required>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <button id="redeemButton" class="button redeem-button">Redeem</button>
+          </div>
+        </div>
+      
+    </div>
+  </div> -->
+
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- <script>
+    // Get form elements
+const orderIDInput = document.querySelector('#orderID');
+const emailInput = document.querySelector('#email');
+const redeemCodeInput = document.querySelector('#redeemCode');
+const redeemButton = document.querySelector('#redeemButton');
+
+// Add event listener to the redeem button
+redeemButton.addEventListener('click', () => {
+  // Get the values from the input fields
+  const orderID = orderIDInput.value;
+  const email = emailInput.value;
+  const redeemedCode = redeemCodeInput.value;
+
+  // Create a data object with the form values
+  const data = {
+    orderID,
+    email,
+    redeemedCode
+  };
+
+  // Send the data to the server
+  fetch('/redeem-code', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .then(result => {
+      // Handle the response from the server
+      console.log(result);
+      // Display appropriate message to the user
+      if (result.success) {
+      swal("Success!", "Code redeemed successfully!", "success");
+
+        // Code redemption successful
+        // alert('Code redeemed successfully!');
+      } else {
+        swal("Error!", "Failed to redeem code!", "error");
+        // Code redemption failed
+        // alert('Failed to redeem code. Please try again.');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      // Display error message to the user
+      swal("Error!",  'Failed to redeem code!', "error");
+    });
+}); -->
+<script>
+
+  // Get form elements
+const orderIDInput = document.querySelector('#orderID');
+const purchasedProductInput = document.querySelector('#purchasedProduct');
+const emailInput = document.querySelector('#email');
+const redeemCodeInput = document.querySelector('#redeemCode');
+const redeemButton = document.querySelector('#redeemButton');
+
+// Add event listener to the redeem button
+redeemButton.addEventListener('click', () => {
+  // Get the values from the input fields
+  const orderID = orderIDInput.value;
+  const purchasedProduct = purchasedProductInput.value;
+  const email = emailInput.value;
+  const redeemedCode = redeemCodeInput.value;
+
+if(orderID==''|| purchasedProduct==''|| email ==''|| redeemedCode==''||orderID==' '|| purchasedProduct==' '|| email ==' '|| redeemedCode==' '){
+swal("Error!", 'All input fields are required', "error");
+return
+}
+
+  // Create a data object with the form values
+  const data = {
+    orderID,
+    purchasedProduct,
+    email,
+    redeemedCode
+  };
+
+  // Send the data to the server
+  fetch('/redeem-code', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .then(result => {
+      // Handle the response from the server
+      console.log(result);
+      // Display appropriate message to the user
+      if (result.success) {
+        swal("Success!", "Code redeemed successfully!", "success");
+        // Code redemption successful
+        // alert('Code redeemed successfully!');
+      } else {
+        swal("Error!", "Failed to redeem code!", "error");
+        // Code redemption failed
+        // alert('Failed to redeem code. Please try again.');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      // Display error message to the user
+      swal("Error!", 'Failed to redeem code!', "error");
+    });
+});
+
+
+</script>
+</body>
+</html>
