@@ -4,6 +4,7 @@
   <title>Admin Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
     /* Custom styles */
     html,body {
@@ -14,7 +15,7 @@
       font-family: Arial, sans-serif;
     }
     .dashboard-container {
-      max-width: 800px;
+      max-width: 1000px;
       margin: 0 auto;
       padding: 40px;
     }
@@ -27,7 +28,7 @@
     .dashboard-section {
       margin-bottom: 40px;
       overflow-y: scroll;
-      height: 500px;
+      max-height: 400px;
     }
     .section-title {
       font-size: 18px;
@@ -49,16 +50,6 @@
       padding: 4px 8px;
       border-radius: 4px;
     }
-    .toggle-button {
-      background-color: #ffdd57;
-      color: #000;
-      border: none;
-      margin-bottom: 10px;
-    }
-    .toggle-button:hover {
-      background-color: #ffc107;
-      color: #000;
-    }
     .tag-new {
       background-color: #f9ca24;
       color: #000;
@@ -72,8 +63,6 @@
     .unused-code {
       color: #23d160;
     }
-
-
     .logo {
       margin-bottom: 20px;
       background-color: #ffdd57;
@@ -104,40 +93,67 @@
 
     <div class="dashboard-section">
       <h2 class="section-title">Codes</h2>
-      <div class="field is-grouped">
-        <div class="control">
-          <input id="numberInput" class="input" type="number" min="0" placeholder="Number of Codes" required>
+      <div class="field">
+        <label class="label">Code Titles</label>
+        <div class="control" id="titleInputContainer">
+          <div class="field has-addons">
+            <div class="control is-expanded">
+              <input class="input title-input" type="text" placeholder="Title for Code">
+            </div>
+            <div class="control">
+              <button class="button is-primary remove-title-btn" disabled>
+                <span class="icon">
+                  <i class="fas fa-minus"></i>
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
-        <div class="control">
-          <button id="submitBtn" class="button is-primary">Generate Codes</button>
+        <div class="field">
+          <div class="control">
+            <button id="addTitleBtn" class="button is-primary">
+              <span class="icon">
+                <i class="fas fa-plus"></i>
+              </span>
+              <span>Add Title</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      <table class="table is-fullwidth">
+      <div class="field">
+        <div class="control">
+          <button id="submitBtn" class="button is-primary generate-btn" disabled>Generate Codes</button>
+        </div>
+      </div>
+
+
+        <table class="table is-fullwidth">
         <thead>
           <tr class="table-header">
             <th>S/N</th>
+            <th>Code Title</th>
             <th>Redeemed Code</th>
           </tr>
         </thead>
         <tbody>
-
-          <%if(codes.length !=0 ){%> 
-          
-          <% codes.forEach((code,index)=>{ %>
+          <% if (codes.length !== 0) { %> 
+            <% codes.forEach((code, index) => { %>
+              <tr>
+                <td><%= index + 1 %></td>
+                <td><%= code.title %></td>
+                <% if (code.used) { %>
+                  <td><span class="tag-used used-code">Used</span> <%= code.code %></td>
+                <% } else { %>
+                  <td><span class="tag-unused unused-code">Unused</span> <%= code.code %></td>
+                <% } %>
+              </tr>
+            <% }) %>
+          <% } else { %>
             <tr>
-              <td><%=index+1 %></td>
-              <%if(code.used){%> <td><span class="tag-used used-code">Used</span> <%=code.code%></td> <%} else {%>
-              <td><span class="tag-unused unused-code">Unused</span>  <%=code.code%></td> <%}%>
-
-              <!-- <td><span class="tag-used used-code">Used</span> ABC123</td> -->
+              <td colspan="3">No Code has been Generated!</td>
             </tr>
-       <%   }) %>
-          <%} else {%>
-            <div class="is-fullwith">
-              No Code has been Generated!
-            </div> <%}%>
-          <!-- Add more rows as needed -->
+          <% } %>
         </tbody>
       </table>
     </div>
@@ -149,6 +165,8 @@
             <th>S/N</th>
             <th>Email</th>
             <th>Order ID</th>
+            <th>Code Title</th>
+
             <th>Purchased Product</th>
             <th>Redeemed Code</th>
           </tr>
@@ -160,58 +178,208 @@
                 <td><%= index + 1 %></td>
                 <td><%= rci.email %></td>
                 <td><%= rci.orderID %></td>
+                <td><%= rci.title %></td>
+
                 <td><%= rci.purchasedProduct %></td>
                 <td><%= rci.redeemedCode %></td>
               </tr>
             <% }) %>
           <% } else { %>
-            <div class="is-fullwith">
-              No records at the moment!
-            </div>
+            <tr>
+              <td colspan="6">No records at the moment!</td>
+            </tr>
           <% } %>
         </tbody>
       </table>
-      
+<!--     </div>
+  </div>
+ -->
+      <!-- <table class="table is-fullwidth">
+        <thead>
+          <tr class="table-header">
+            <th>S/N</th>
+            <th>Code Title</th>
+            <th>Redeemed Code</th>
+          </tr>
+        </thead>
+        <tbody id="codesTableBody">
+          <tr>
+            <td colspan="3">No Code has been Generated!</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
-    <!-- <div class="field is-grouped">
-      <div class="control">
-        <button class="button is-primary toggle-button">Redeemed Code</button>
-      </div>
-      <div class="control">
-        <button class="button is-primary toggle-button">Generate Code</button>
-      </div>
+ -->
+    <!-- div class="dashboard-section">
+      <h2 class="section-title">Redeemed Code</h2>
+      <table class="table is-fullwidth">
+        <thead>
+          <tr class="table-header">
+            <th>S/N</th>
+            <th>Email</th>
+            <th>Order ID</th>
+            <th>Purchased Product</th>
+            <th>Code Title</th>
+            <th>Redeemed Code</th>
+          </tr>
+        </thead>
+        <tbody id="redeemedTableBody">
+          <tr>
+            <td colspan="6">No records at the moment!</td>
+          </tr>
+        </tbody>
+      </table>
     </div> -->
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script>
-    // Assuming you have a button with id "submitBtn" and an input field with id "numberInput"
+    // Function to handle adding a new title input field
+    function handleAddTitle() {
+      const titleInputContainer = document.getElementById('titleInputContainer');
 
-// Function to handle the button click event
-function handleClick() {
-  // Get the number value from the input field
-  const number = document.getElementById('numberInput').value;
+      const fieldDiv = document.createElement('div');
+      fieldDiv.classList.add('field', 'has-addons');
 
-  // Send the number value to the server using Axios
-  axios.post('/admin/create-codes', { number })
-    .then((d) => {
-      swal("Success!", "Codes Generated!", "success");
-      setTimeout(() => {
-    location.reload()
-        
-      }, 2000);
-    })
-    .catch((error) => {
-      swal("Error!", "Failed to generate Codes!", "error");
+      const controlDiv = document.createElement('div');
+      controlDiv.classList.add('control', 'is-expanded');
 
+      const input = document.createElement('input');
+      input.classList.add('input', 'title-input');
+      input.type = 'text';
+      input.placeholder = 'Title for Code';
+
+      const buttonDiv = document.createElement('div');
+      buttonDiv.classList.add('control');
+
+      const button = document.createElement('button');
+      button.classList.add('button', 'is-primary', 'remove-title-btn');
+      button.innerHTML = `
+        <span class="icon">
+          <i class="fas fa-minus"></i>
+        </span>
+      `;
+
+      controlDiv.appendChild(input);
+      buttonDiv.appendChild(button);
+      fieldDiv.appendChild(controlDiv);
+      fieldDiv.appendChild(buttonDiv);
+
+      titleInputContainer.appendChild(fieldDiv);
+
+      const titleInputs = document.querySelectorAll('.title-input');
+      const removeTitleBtns = document.querySelectorAll('.remove-title-btn');
+      const generateBtn = document.getElementById('submitBtn');
+
+      if (titleInputs.length > 1) {
+        removeTitleBtns.forEach(btn => {
+          btn.removeAttribute('disabled');
+        });
+      }
+
+      if (titleInputs.length > 0) {
+        generateBtn.removeAttribute('disabled');
+      }
+    }
+
+    // Function to handle removing a title input field
+    function handleRemoveTitle(event) {
+      const titleInputContainer = document.getElementById('titleInputContainer');
+
+      const fieldDiv = event.target.closest('.field.has-addons');
+
+      titleInputContainer.removeChild(fieldDiv);
+
+      const titleInputs = document.querySelectorAll('.title-input');
+      const removeTitleBtns = document.querySelectorAll('.remove-title-btn');
+      const generateBtn = document.getElementById('submitBtn');
+
+      if (titleInputs.length === 1) {
+        removeTitleBtns.forEach(btn => {
+          btn.setAttribute('disabled', true);
+        });
+      }
+
+      if (titleInputs.length === 0) {
+        generateBtn.setAttribute('disabled', true);
+      }
+    }
+
+    // Function to generate the codes
+    function generateCodes() {
+      const titleInputs = document.querySelectorAll('.title-input');
+
+      const titles = Array.from(titleInputs).map(input => input.value.trim()).filter(title => title !== '');
+
+      const codesTableBody = document.getElementById('codesTableBody');
+      const redeemedTableBody = document.getElementById('redeemedTableBody');
+
+      axios.post('/admin/create-codes', { titles })
+        .then(response => {
+          // const { data } = response;
+
+          // if (data.codes.length > 0) {
+          //   let codesTableHTML = '';
+          //   data.codes.forEach((code, index) => {
+          //     const codeStatusClass = code.used ? 'used-code' : 'unused-code';
+          //     const codeStatusText = code.used ? 'Used' : 'Unused';
+
+          //     codesTableHTML += `
+          //       <tr>
+          //         <td>${index + 1}</td>
+          //         <td>${code.title}</td>
+          //         <td><span class="tag-${codeStatusClass} ${codeStatusClass}">${codeStatusText}</span> ${code.code}</td>
+          //       </tr>
+          //     `;
+          //   });
+
+          //   codesTableBody.innerHTML = codesTableHTML;
+          // } else {
+          //   codesTableBody.innerHTML = '<tr><td colspan="3">No Code has been Generated!</td></tr>';
+          // }
+
+          // if (data.redeemedCodes.length > 0) {
+          //   let redeemedTableHTML = '';
+          //   data.redeemedCodes.forEach((redeemed, index) => {
+          //     redeemedTableHTML += `
+          //       <tr>
+          //         <td>${index + 1}</td>
+          //         <td>${redeemed.email}</td>
+          //         <td>${redeemed.orderID}</td>
+          //         <td>${redeemed.purchasedProduct}</td>
+          //         <td>${redeemed.title}</td>
+          //         <td>${redeemed.redeemedCode}</td>
+          //       </tr>
+          //     `;
+          //   });
+
+          //   redeemedTableBody.innerHTML = redeemedTableHTML;
+          // } else {
+          //   redeemedTableBody.innerHTML = '<tr><td colspan="6">No records at the moment!</td></tr>';
+          // }
+
+          swal("Success!", "Codes Generated!", "success");
+          setTimeout(()=>{
+            location.reload()
+          },1000)
+        })
+        .catch(error => {
+          console.log(error)
+          swal("Error!", "Failed to generate Codes!", "error");
+        });
+    }
+
+    // Add click event listeners to the buttons
+    document.getElementById('addTitleBtn').addEventListener('click', handleAddTitle);
+    document.getElementById('submitBtn').addEventListener('click', generateCodes);
+
+    // Delegate event listener for removing title fields
+    document.addEventListener('click', event => {
+      if (event.target.classList.contains('remove-title-btn')) {
+        handleRemoveTitle(event);
+      }
     });
-}
-
-// Add a click event listener to the button
-document.getElementById('submitBtn').addEventListener('click', handleClick);
-
   </script>
 </body>
 </html>

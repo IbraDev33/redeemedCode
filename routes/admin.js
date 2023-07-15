@@ -65,26 +65,25 @@ router.post('/login',function(req,res,next){
 
 router.post('/create-codes',isAuthenticated,async function(req,res){
 
-  const numberOfCodes = Number(req.body.number)
+  const numberOfCodes = Number(req.body.titles.length)
+  console.log(req.body)
 // const code = shortid.generate(); // Generates a short unique code
   let    code = generateCustomShortID()
 let generatedCodes = []
 
 for(i=0;i<numberOfCodes;i++){
-  generatedCodes.push({code:generateCustomShortID(),used:false})
+  generatedCodes.push({title:req.body.titles[i],code:generateCustomShortID(),used:false})
 }
 
  
-
+console.log(generatedCodes)
 Code.insertMany(generatedCodes).then((d)=>{
   res.status(200).end('OK!')
 }).catch((err)=>{
   res.status(500).end(err)
 })
 
-  // console.log(generatedCodes)
-  // res.send('6')
- 
+  
 
 })
 

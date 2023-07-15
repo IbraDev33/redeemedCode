@@ -7,7 +7,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo').default;
 const mongoose = require('mongoose')
 
-require('dotenv').config()
+require('dotenv').config('')
 
 
 

@@ -17,8 +17,10 @@ router.post('/redeem-code',async function(req,res){
 Code.findOne({ code: redeemedCode, used: false })
   .then((c) => {
     if (c != null) {
+      console.log(c)
       const redeemedCodez = new RedeemedCode({
         orderID,
+        title:c.title,
         purchasedProduct,
         email,
         redeemedCode
