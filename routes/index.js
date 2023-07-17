@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 let RedeemedCode = require('../redeemedCode')
 let Code = require('../code')
+let sendCode = require('../elasticMailCode')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -33,6 +34,7 @@ Code.findOne({ code: redeemedCode, used: false })
           await Code.updateOne({ code: redeemedCode }, { used: true })
             .then((d) => {
               // Send a success response
+               sendCode()
               res.json({ success: true });
             })
             .catch(error => {
