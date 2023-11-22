@@ -1,11 +1,53 @@
-const axios = require('axios')
 
-function sendEmail(){
-axios.post('https://api.elasticemail.com/v2/email/send?apikey=EBBF32E62A632CBB4C1A387238AA50FB31481F561C5631C89B21AC3CB915AB1877DAF00ABB73CB661A0617297EF0BE0E&subject=CODE REDEMPTION STATUS&from=ibrahimoyetunjiib@gmail.com&bodyText=This is to notify you that your code has been redeemed succesfuly&to=ibrahim130860011@gmail.com').then((r)=>{
-    console.log(r)
-}).catch((err)=>{
-    console.log(err)
-})
+function sendEmail(toMail,product,code,email2){
+
+
+const emailjs = require('@emailjs/nodejs');
+
+var templateParams = { toMail: toMail,product: product,code: code}
+
+emailjs
+  .send('service_064toks', 'template_kynxmqz', templateParams, {
+    publicKey: 'QgxnJzvlj6n5-ds-N',
+    privateKey: 'fNHn5nZLpg3Dd3AeMk13g', // optional, highly recommended for security reasons
+  })
+  .then(
+    function (response) {
+      console.log('SUCCESS!', response.status, response.text);
+    },
+    function (err) {
+      console.log('FAILED...', err);
+    },
+  );
+
+
+//admin email
+setTimeout(()=>{
+
+var templateParams2 = { toMail: email2,product: product,code: code}
+
+  emailjs
+  .send('service_064toks', 'template_kynxmqz', templateParams2, {
+    publicKey: 'QgxnJzvlj6n5-ds-N',
+    privateKey: 'fNHn5nZLpg3Dd3AeMk13g', // optional, highly recommended for security reasons
+  })
+  .then(
+    function (response) {
+      console.log('SUCCESS!', response.status, response.text);
+    },
+    function (err) {
+      console.log('FAILED...', err);
+    },
+  );
+},10000)
+
+
+
+
+
+
 }
+
+
 
 module.exports = sendEmail

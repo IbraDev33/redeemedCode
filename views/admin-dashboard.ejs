@@ -1,139 +1,50 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Admin Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <style>
-    /* Custom styles */
-    html,body {
-      background-color: #000;
-      color: #fff;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
-    .dashboard-container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 40px;
-    }
-    .dashboard-title {
-      font-size: 24px;
-      font-weight: bold;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .dashboard-section {
-      margin-bottom: 40px;
-      overflow-y: scroll;
-      max-height: 400px;
-    }
-    .section-title {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
-    .table-header {
-      background-color: #ffdd57;
-    }
-    .tag-used {
-      background-color: #ff3860;
-      color: #fff;
-      padding: 4px 8px;
-      border-radius: 4px;
-    }
-    .tag-unused {
-      background-color: #23d160;
-      color: #fff;
-      padding: 4px 8px;
-      border-radius: 4px;
-    }
-    .tag-new {
-      background-color: #f9ca24;
-      color: #000;
-      padding: 4px 8px;
-      border-radius: 4px;
-      margin-left: 5px;
-    }
-    .used-code {
-      color: #ff3860;
-    }
-    .unused-code {
-      color: #23d160;
-    }
-    .logo {
-      margin-bottom: 20px;
-      background-color: #ffdd57;
-      padding: 10px;
-      max-height: 100;
-      max-width: fit-content;
-    }
-    .logo img {
-      max-width: 200px;
-    }
+<%- include('./layout/header') %> 
 
-    /* Responsive styles */
-    @media screen and (max-width: 768px) {
-      .dashboard-container {
-        width: 90%;
-        padding: 20px;
-      }
-    }
-  </style>
-</head>
-<body style="background-color: #000;">
-  <div class="dashboard-container">
-    <div class="logo">
-      <img src="/images/Redeem.png" alt="Logo">
-    </div>
 
-    <h1 class="dashboard-title">Admin Dashboard</h1>
-
-    <div class="dashboard-section">
-      <h2 class="section-title">Codes</h2>
-      <div class="field">
-        <label class="label">Code Titles</label>
-        <div class="control" id="titleInputContainer">
-          <div class="field has-addons">
-            <div class="control is-expanded">
-              <input class="input title-input" type="text" placeholder="Title for Code">
-            </div>
-            <div class="control">
-              <button class="button is-primary remove-title-btn" disabled>
-                <span class="icon">
-                  <i class="fas fa-minus"></i>
-                </span>
-              </button>
-            </div>
-          </div>
+<div class="dashboard-section">
+  <div class="field">
+    <label class="label">Code Titles</label>
+    <div class="control" id="titleInputContainer">
+      <div class="field has-addons">
+        <div class="control is-expanded">
+          <input class="input title-input" type="text" placeholder="Title for Code">
         </div>
-        <div class="field">
-          <div class="control">
-            <button id="addTitleBtn" class="button is-primary">
-              <span class="icon">
-                <i class="fas fa-plus"></i>
-              </span>
-              <span>Add Title</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="field">
         <div class="control">
-          <button id="submitBtn" class="button is-primary generate-btn" disabled>Generate Codes</button>
+          <button class="button is-primary remove-title-btn" disabled>
+            <span class="icon">
+              <i class="fas fa-minus"></i>
+            </span>
+          </button>
         </div>
       </div>
+    </div>
+    <div class="field">
+      <div class="control">
+        <button id="addTitleBtn" class="button is-primary">
+          <span class="icon">
+            <i class="fas fa-plus"></i>
+          </span>
+          <span>Add Title</span>
+        </button>
+      </div>
+    </div>
+  </div>
 
+  <div class="field">
+    <div class="control">
+      <button id="submitBtn" class="button is-primary generate-btn" disabled>Generate Codes</button>
+    </div>
+  </div>
 
-        <table class="table is-fullwidth">
-        <thead>
-          <tr class="table-header">
-            <th>S/N</th>
-            <th>Code Title</th>
-            <th>Redeemed Code</th>
+</div>
+
+    <div>
+      <table id="table1" class="table is-fullwidth">
+        <thead class="table-dark">
+          <tr>
+            <th class="text-white">S/N</th>
+            <th class="text-white">Code Title</th>
+            <th class="text-white">Redeemed Code</th>
           </tr>
         </thead>
         <tbody>
@@ -143,9 +54,9 @@
                 <td><%= index + 1 %></td>
                 <td><%= code.title %></td>
                 <% if (code.used) { %>
-                  <td><span class="tag-used used-code">Used</span> <%= code.code %></td>
+                  <td><span class="badge bg-danger">Used</span> <%= code.code %></td>
                 <% } else { %>
-                  <td><span class="tag-unused unused-code">Unused</span> <%= code.code %></td>
+                  <td><span class="badge bg-success">Unused</span> <%= code.code %></td>
                 <% } %>
               </tr>
             <% }) %>
@@ -157,18 +68,20 @@
         </tbody>
       </table>
     </div>
+      
+  
     <div class="dashboard-section">
       <h2 class="section-title">Redeemed Code</h2>
-      <table class="table is-fullwidth">
+      <table id="table2" class="table is-fullwidth">
         <thead>
-          <tr class="table-header">
-            <th>S/N</th>
-            <th>Email</th>
-            <th>Order ID</th>
-            <th>Code Title</th>
+          <tr class="table-dark">
+            <th class="text-white">S/N</th>
+            <th class="text-white">Email</th>
+            <th class="text-white">Order ID</th>
+            <th class="text-white">Code Title</th>
 
-            <th>Purchased Product</th>
-            <th>Redeemed Code</th>
+            <th class="text-white">Purchased Product</th>
+            <th class="text-white">Redeemed Code</th>
           </tr>
         </thead>
         <tbody>
@@ -231,9 +144,18 @@
       </table>
     </div> -->
   </div>
-
+ 
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    
+  new DataTable('#table1');
+  new DataTable('#table2');
+</script>
   <script>
     // Function to handle adding a new title input field
     function handleAddTitle() {
@@ -381,5 +303,6 @@
       }
     });
   </script>
-</body>
-</html>
+
+
+

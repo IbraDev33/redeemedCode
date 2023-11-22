@@ -34,7 +34,12 @@ Code.findOne({ code: redeemedCode, used: false })
           await Code.updateOne({ code: redeemedCode }, { used: true })
             .then((d) => {
               // Send a success response
-               sendCode()
+              try{
+                sendCode()
+              } 
+              catch(err){
+                console.log(err)
+              }
               res.json({ success: true });
             })
             .catch(error => {

@@ -6,7 +6,7 @@ var logger = require('morgan');
 const session = require('express-session');
 const MongoStore = require('connect-mongo').default;
 const mongoose = require('mongoose')
-
+var flash = require('connect-flash');
 require('dotenv').config('')
 
 
@@ -18,7 +18,7 @@ let adminRouter = require('./routes/admin')
 var app = express();
 
 // const lh = 'mongodb://127.0.0.1:27017/redeemer'  draganddrop
-mongoose.connect("mongodb+srv://ibrahim:WJgo0lnPPZjsQhRs@draganddrop.w4gluc5.mongodb.net/?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://ibrahimoularbi:ArabiTest@redeemed.uzvruwa.mongodb.net/?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -37,25 +37,13 @@ app.use(session({
     saveUninitialized:true,
     cookie: { maxAge: oneDay },
     resave: false ,
-  // secret: 'thecatISintheba@@', // Replace with your own secret key
-  // resave: false,
-  // saveUninitialized: false,
-  
-  // store: MongoStore.create({ mongoUrl: //"mongodb+srv://ibrahim:WJgo0lnPPZjsQhRs@draganddrop.w4gluc5.mongodb.net/?retryWrites=true&w=//majority" }),
-  
-  //store:  MongoStore.create({ 
-    //Using connect-mongo as the session store
- // url: "mongodb+srv://ibrahim:WJgo0lnPPZjsQhRs@draganddrop.w4gluc5.mongodb.net/?retryWrites=true&w=majority",
-    // Replace with your MongoDB connection URL
-  //autoRemove: 'native', // Optional: Automatically remove expired sessions
-    //ttl: 14 * 24 * 60 * 60, // Optional: Session TTL (in seconds) - example: 14 days
-   //}),
 }));
 
 // app.use(isAuthenticated);
 
 app.use(logger('dev'));
 app.use(express.json());
+app.use(flash())
 app.use(express.urlencoded({ extended: false }));
 
 
